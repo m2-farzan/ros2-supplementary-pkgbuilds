@@ -1,0 +1,48 @@
+# Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
+
+pkgname=ros2-git-navigation
+pkgver=r2046.b63b11f8
+pkgrel=1
+pkgdesc="The spiritual successor of the ROS Navigation Stack (AKA Nav2)"
+url="https://navigation.ros.org/"
+arch=('any')
+depends=('ros2-git'
+         'opencv'
+         'python-pyzmq'
+         'lcov'
+         'boost-libs'
+         'python-yaml'
+         'ceres-solver'
+         )
+source=("navigation2::git+https://github.com/ros-planning/navigation2#branch=main")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd $srcdir/navigation2
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    #rm -rf $srcdir/src
+    #mkdir -p $srcdir/src
+    #vcs import $srcdir/src < $srcdir/navigation2/tools/underlay.repos
+    rm -rf $srcdir/dependencies
+    mkdir -p $srcdir/dependencies
+    vcs import $srcdir/dependencies < $srcdir/navigation2/tools/underlay.repos
+    # ln -s ../navigation2 $srcdir/src/
+}
+
+build() {
+    source /opt/ros2/rolling/setup.sh
+    colcon build --merge-install
+}
+
+package() {
+    # Copy build files
+    mkdir -p $pkgdir/opt/ros2/rolling
+    cp -r $srcdir/install/* $pkgdir/opt/ros2/rolling/
+    # Exclude files that clash with base ros installation
+    rm $pkgdir/opt/ros2/rolling/*setup.*
+    rm $pkgdir/opt/ros2/rolling/_local_setup*
+    rm $pkgdir/opt/ros2/rolling/COLCON_IGNORE
+}

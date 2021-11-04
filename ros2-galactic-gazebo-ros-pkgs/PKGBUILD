@@ -1,0 +1,48 @@
+# Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
+
+pkgname=ros2-galactic-gazebo-ros-pkgs
+pkgver=20211028_205755
+pkgrel=1
+pkgdesc="Wrappers, tools and additional API's for using ROS with Gazebo"
+url="http://wiki.ros.org/gazebo_ros_pkgs"
+arch=('any')
+depends=('ros2-galactic'
+         'boost'
+         'gazebo'
+         'opencv'
+         'python-numpy'
+)
+source=("gazebo_ros_pkgs.repos::https://raw.githubusercontent.com/ros-simulation/gazebo_ros_pkgs/galactic/gazebo_ros_pkgs.repos"
+        "version-lock.patch"
+)
+sha256sums=('SKIP'
+            'SKIP'
+)
+
+pkgver() {
+    BRANCH_STATE_=$(curl https://api.github.com/repos/ros-simulation/gazebo_ros_pkgs/branches/galactic 2>/dev/null)
+    DATE_=$(echo $BRANCH_STATE_ | grep -oP "\"date\": \"\K[0-9\-]+" | grep -P ".+" --max-count=1 | sed "s/-//g" -)
+    HASH_=$(echo $BRANCH_STATE_ | grep -oP "\"sha\": \"\K\w{6}" | grep -P ".+" --max-count=1)
+    printf "${DATE_}_${HASH_}"
+}
+
+prepare() {
+    patch $(readlink -f $srcdir/gazebo_ros_pkgs.repos) $srcdir/version-lock.patch
+    source /opt/ros2/galactic/setup.sh
+    mkdir -p $srcdir/src
+    vcs import $srcdir/src < $srcdir/gazebo_ros_pkgs.repos
+}
+
+build() {
+    colcon build --merge-install
+}
+
+package() {
+    # Copy build files
+    mkdir -p $pkgdir/opt/ros2/galactic
+    cp -r $srcdir/install/* $pkgdir/opt/ros2/galactic/
+    # Exclude files that clash with base ros installation
+    rm $pkgdir/opt/ros2/galactic/*setup.*
+    rm $pkgdir/opt/ros2/galactic/_local_setup*
+    rm $pkgdir/opt/ros2/galactic/COLCON_IGNORE
+}

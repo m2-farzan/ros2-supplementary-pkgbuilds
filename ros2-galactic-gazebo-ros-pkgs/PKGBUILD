@@ -34,7 +34,13 @@ prepare() {
 }
 
 build() {
-    colcon build --merge-install
+    # Skip locally installed packages to avoid pacman conflicts
+    PROVIDED_PACKAGES_=$(find $srcdir/src -name package.xml | xargs dirname | xargs -L1 basename | sort | uniq)
+    INSTALLED_PACKAGES_=$(pacman -Ql ros2-galactic | grep -oP "/share/\K[^/]+" | sort | uniq)
+    EXCLUDE_LIST_=$(comm -12 <(printf "${PROVIDED_PACKAGES_}") <(printf "${INSTALLED_PACKAGES_}"))
+
+    # Build
+    colcon build --merge-install --packages-skip ${EXCLUDE_LIST_}
 }
 
 package() {

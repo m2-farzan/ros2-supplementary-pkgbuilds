@@ -60,6 +60,13 @@ So how to find out what are dependencies of a package? Here's some tips:
 - `rosdep check --from-paths <package_source_path>` displays non-ROS dependencies of a package. You can find Arch equivalents by searching the names in https://www.archlinux.org/packages/ first and https://aur.archlinux.org/packages/.
 - Studying `package.xml` should reveal ROS dependencies. Note that some of them are probably already installed by ros2-foxy or ros2-git. `ros2 pkg list | grep <package_name>` should help here. However, if you've also installed stuff from AUR they'll also show up in the list. To distinguish them, run the command like `ls /opt/ros2/rolling/share/ | grep xacro | xargs pacman -Qo` which reveals the pacman package that installed the ros package.
 - Finally, you can lookup in [this file](http://packages.ros.org/ros2/ubuntu/lists/ros-rolling-focal-amd64_focal_main_amd64_Packages) which is package index for pre-built Ubuntu packages. It includes all sort of dependencies, and I find this method more convenient than the others. You still need to look up recursively. A script could help with the recursion. I'll make one if I get the time.
+- Another way to list the dependencies quickly:
+  ```bash
+  cd fat_parent_package/src
+  DEPENDENCIES_=$(grep -RPoh "<(build|buildtool|exec|run)?_?depend>\K[^\<]+" | sort | uniq)
+  BASE_PACKAGES_=$(pacman -Ql ros2-galactic | grep -oP "/share/\K[^/]+" | sort | uniq)
+  comm -23 <(printf "${DEPENDENCIES_}") <(printf "${BASE_PACKAGES_}")
+  ```
 
 # Afterthought
 

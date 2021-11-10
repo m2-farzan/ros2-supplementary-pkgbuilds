@@ -52,7 +52,7 @@ package() {
 }
 
 ```
-Note that the package depends on other ROS packages. For two of them I created separate pkgbuilds (`navigation`, `diagnostic`) because I felt they are common packages. For `geographic_info` I didn't bother making yet another pkgbuild. I just added clone instruction so that it'll be built by colcon before the main package—colcon automatically builds dependencies first. If later on I run into another package with `geographic_info` dependency, I'll refactor it as a new package. There are no strict rules, and IMO going too granular will just create clutter.
+Note that the package depends on other ROS packages. For two of them I created separate pkgbuilds (`navigation`, `diagnostic`) because I felt they are common packages. For `geographic_info` I didn't bother making yet another pkgbuild. I just added clone instruction so that it'll be built by colcon before the main package—colcon automatically builds dependencies first. If later on I run into another package with `geographic_info` dependency, I'll refactor it as a new package. There are no strict rules, and IMO going too granular will just create clutter. (EDIT: See "Thoughts on semi-granular packaging" in the bottom)
 
 The base ros2-foxy (or ros2-git) package itself installs a few hundred base packages and all ROS packages depend on it.
 
@@ -77,3 +77,11 @@ The reason that such package is viable is that Arch is rarely used for productio
 
 I think this approach gives better dev experience. It also complies with [Archlinux princliple](https://wiki.archlinux.org/title/Arch_Linux#Principles) of simplicity:
 > Packages are only split when compelling advantages exist, such as to save disk space in particularly bad cases of waste.
+
+# Thoughts on semi-granular packaging
+
+Here's the problem with semi-granular packaging: Let package A depend on a tiny package, X. We don't refactor X to avoid clutter. Later we add package B that also depends on X. These two packages will have clashing files, requiring us to refactor X. In practice this happens frequently and carries us to the point that we get reluctant to adding new packages.
+
+A workaround is to skip the locally installed packages in `build()` step, to avoid clashing files. That way, if A is available (and therefore X), package B will not build X. It's an easy but dirty solution. For example, if package A gets removed, X will be gone and now B fails.
+
+So maybe semi-granular packaging is not a good option.

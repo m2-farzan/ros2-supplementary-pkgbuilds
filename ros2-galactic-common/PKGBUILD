@@ -25,6 +25,7 @@ source=(
     "navigation2::git+https://github.com/ros-planning/navigation2#branch=galactic"
     "ompl::git+https://github.com/ompl/ompl"
     "robot_localization::git+https://github.com/cra-ros-pkg/robot_localization#branch=galactic"
+    "slam_toolbox::git+https://github.com/SteveMacenski/slam_toolbox#branch=galactic"
     "xacro::git+https://github.com/ros/xacro#branch=ros2"
 
     "gazebo_ros_pkgs.repos::https://raw.githubusercontent.com/ros-simulation/gazebo_ros_pkgs/galactic/gazebo_ros_pkgs.repos"
@@ -32,6 +33,7 @@ source=(
     "version-lock.patch"
 )
 sha256sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
     'SKIP'

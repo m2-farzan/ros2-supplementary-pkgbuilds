@@ -67,8 +67,14 @@ build() {
     INSTALLED_PACKAGES_=$(pacman -Ql ros2-galactic | grep -oP "/share/\K[^/]+" | sort | uniq)
     EXCLUDE_LIST_=$(comm -12 <(printf "${PROVIDED_PACKAGES_}") <(printf "${INSTALLED_PACKAGES_}"))
 
+    # Disable parallel build if RAM is low
+    if [[ $(free | grep -Po "Mem:\s+\K\d+") < 32000000 ]]; then
+        printf "\nRAM is smaller than 32 GB. Parallel build will be disabled for stability.\n\n"
+        export COLCON_EXTRA_ARGS="${COLCON_EXTRA_ARGS} --executor sequential"
+    fi
+
     # Build
-    colcon build --merge-install --packages-skip ${EXCLUDE_LIST_}
+    colcon build --merge-install --packages-skip ${EXCLUDE_LIST_} ${COLCON_EXTRA_ARGS}
 }
 
 package() {

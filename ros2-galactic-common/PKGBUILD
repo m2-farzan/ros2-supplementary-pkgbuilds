@@ -1,7 +1,7 @@
 # Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
 
 pkgname=ros2-galactic-common
-pkgver=2021_11_11_03_13
+pkgver=2021_11_11_19_03
 pkgrel=1
 pkgdesc="Common ROS 2 Packages (See upstream for the list)"
 url="https://github.com/m2-farzan/ros2-supplementary-pkgbuilds"
@@ -65,11 +65,6 @@ prepare() {
 }
 
 build() {
-    # Skip locally installed packages to avoid pacman conflicts
-    PROVIDED_PACKAGES_=$(find $srcdir/src -name package.xml | xargs dirname | xargs -L1 basename | sort | uniq)
-    INSTALLED_PACKAGES_=$(pacman -Ql ros2-galactic | grep -oP "/share/\K[^/]+" | sort | uniq)
-    EXCLUDE_LIST_=$(comm -12 <(printf "${PROVIDED_PACKAGES_}") <(printf "${INSTALLED_PACKAGES_}"))
-
     # Disable parallel build if RAM is low
     if [[ $(free | grep -Po "Mem:\s+\K\d+") < 32000000 ]]; then
         printf "\nRAM is smaller than 32 GB. Parallel build will be disabled for stability.\n\n"
@@ -77,16 +72,11 @@ build() {
     fi
 
     # Build
-    colcon build --merge-install --packages-skip ${EXCLUDE_LIST_} ${COLCON_EXTRA_ARGS}
+    colcon build --merge-install ${COLCON_EXTRA_ARGS}
 }
 
 package() {
     # Copy build files
     mkdir -p $pkgdir/opt/ros2/galactic
-    cp -r $srcdir/install/* $pkgdir/opt/ros2/galactic/
-
-    # Exclude files that clash with base ros installation
-    rm $pkgdir/opt/ros2/galactic/*setup.*
-    rm $pkgdir/opt/ros2/galactic/_local_setup*
-    rm $pkgdir/opt/ros2/galactic/COLCON_IGNORE
+    cp -r $srcdir/install/* $pkgdir/opt/ros2/galactic-common/
 }

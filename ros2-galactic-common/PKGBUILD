@@ -6,6 +6,7 @@ pkgrel=1
 pkgdesc="Common ROS 2 Packages (See upstream for the list)"
 url="https://github.com/m2-farzan/ros2-supplementary-pkgbuilds"
 arch=('any')
+conflicts=('ros2-galactic-xacro')
 depends=(
     'ros2-galactic'
     'boost-libs'

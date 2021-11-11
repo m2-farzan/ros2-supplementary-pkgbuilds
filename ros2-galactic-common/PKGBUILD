@@ -68,7 +68,7 @@ build() {
     EXCLUDE_LIST_=$(comm -12 <(printf "${PROVIDED_PACKAGES_}") <(printf "${INSTALLED_PACKAGES_}"))
 
     # Build
-    colcon build --merge-install #--packages-skip ${EXCLUDE_LIST_}
+    colcon build --merge-install --packages-skip ${EXCLUDE_LIST_}
 }
 
 package() {

@@ -1,7 +1,7 @@
 # Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
 
 pkgname=ros2-galactic-common
-pkgver=2021_11_11_19_03
+pkgver=2021_11_12_04_47
 pkgrel=1
 pkgdesc="Common ROS 2 Packages (See upstream for the list)"
 url="https://github.com/m2-farzan/ros2-supplementary-pkgbuilds"
@@ -18,20 +18,19 @@ depends=(
     'python-yaml'
 )
 source=(
-    "angles::git+https://github.com/ros/angles#branch=ros2"
-    "behaviortree_cpp_v3::git+https://github.com/BehaviorTree/BehaviorTree.CPP"
-    "bond_core::git+https://github.com/ros/bond_core#branch=ros2"
-    "diagnostics::git+https://github.com/ros/diagnostics#branch=galactic"
-    "geographic_info::git+https://github.com/ros-geographic-info/geographic_info#branch=ros2"
-    "navigation2::git+https://github.com/ros-planning/navigation2#branch=galactic"
-    "ompl::git+https://github.com/ompl/ompl"
-    "robot_localization::git+https://github.com/cra-ros-pkg/robot_localization#branch=galactic"
-    "slam_toolbox::git+https://github.com/SteveMacenski/slam_toolbox#branch=galactic"
-    "xacro::git+https://github.com/ros/xacro#branch=ros2"
+    "fetch/angles::git+https://github.com/ros/angles#branch=ros2"
+    "fetch/behaviortree_cpp_v3::git+https://github.com/BehaviorTree/BehaviorTree.CPP"
+    "fetch/bond_core::git+https://github.com/ros/bond_core#branch=ros2"
+    "fetch/diagnostics::git+https://github.com/ros/diagnostics#branch=galactic"
+    "fetch/geographic_info::git+https://github.com/ros-geographic-info/geographic_info#branch=ros2"
+    "fetch/navigation2::git+https://github.com/ros-planning/navigation2#branch=galactic"
+    "fetch/ompl::git+https://github.com/ompl/ompl"
+    "fetch/robot_localization::git+https://github.com/cra-ros-pkg/robot_localization#branch=galactic"
+    "fetch/slam_toolbox::git+https://github.com/SteveMacenski/slam_toolbox#branch=galactic"
+    "fetch/xacro::git+https://github.com/ros/xacro#branch=ros2"
 
     "gazebo_ros_pkgs.repos::https://raw.githubusercontent.com/ros-simulation/gazebo_ros_pkgs/galactic/gazebo_ros_pkgs.repos"
-    
-    "version-lock.patch"
+    "gazebo_ros_pkgs.repos.patch::gazebo_ros_pkgs.repos.patch"
 )
 sha256sums=(
     'SKIP'
@@ -46,7 +45,6 @@ sha256sums=(
     'SKIP'
 
     'SKIP'
-
     'SKIP'
 )
 
@@ -59,7 +57,7 @@ prepare() {
     sed -i "s/c++14/c++17/g" $srcdir/robot_localization/CMakeLists.txt
 
     # gazebo_ros_pkgs
-    patch -p0 --forward $(readlink -f $srcdir/gazebo_ros_pkgs.repos) $srcdir/version-lock.patch || true
+    patch -p0 --forward $(readlink -f $srcdir/gazebo_ros_pkgs.repos) $srcdir/gazebo_ros_pkgs.repos.patch || true
     mkdir -p $srcdir/gazebo_ros_pkgs
     vcs import $srcdir/gazebo_ros_pkgs < $srcdir/gazebo_ros_pkgs.repos
 }
@@ -77,6 +75,6 @@ build() {
 
 package() {
     # Copy build files
-    mkdir -p $pkgdir/opt/ros2/galactic
+    mkdir -p $pkgdir/opt/ros2/galactic-common
     cp -r $srcdir/install/* $pkgdir/opt/ros2/galactic-common/
 }

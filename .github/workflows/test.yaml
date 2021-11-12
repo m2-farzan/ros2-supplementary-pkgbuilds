@@ -88,7 +88,8 @@ jobs:
       - name: Update yay cache
         run: |
           id=$(docker create localhost:5000/ros2-galactic-common:ci)
-          docker cp $id:/var/ab/.cache/yay $(pwd)/yaycache
+          sudo docker cp $id:/var/ab/.cache/yay/ $(pwd)/yaycache
+          sudo mv yaycache/yay/* yaycache/
           docker rm -v $id
       - name: Load build cache
         uses: actions/cache@v2

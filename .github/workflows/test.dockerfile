@@ -9,7 +9,7 @@ RUN sudo -u $AUR_USER git config --global user.email "test@example.com"
 # INSTALL ROS2
 USER $AUR_USER
 WORKDIR /ros2-pkg
-ADD --chown=$AUR_USER https://github.com/m2-farzan/ros2-galactic-PKGBUILD/archive/refs/heads/master.zip /ros2-pkg
+RUN git clone https://github.com/m2-farzan/ros2-galactic-PKGBUILD .
 
 USER root
 RUN cat .SRCINFO | grep -oP "depends\ \=\ \K.+" | xargs sudo -u $AUR_USER yay -S --noconfirm --noprogressbar --needed

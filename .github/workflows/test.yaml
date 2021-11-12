@@ -66,6 +66,16 @@ jobs:
           # then will get the last available artifact from previous workflow
           # default false, just try to download from the last one
           check_artifacts:  false
+      - name: Load yay cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./yaycache
+          key: ${{ runner.os }}
+      - name: Chown yay cache in host
+        run: |
+          mkdir -p ./yaycache
+          sudo chown -R 1000:1000 ~/yaycache
       - name: Build requirements
         uses: docker/build-push-action@v2
         with:

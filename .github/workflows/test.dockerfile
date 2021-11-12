@@ -6,8 +6,11 @@ RUN pacman -Syyu --noconfirm --noprogressbar
 RUN sudo -u $AUR_USER git config --global user.name "Test User"
 RUN sudo -u $AUR_USER git config --global user.email "test@example.com"
 
-# INSTALL ROS2
+# Share yay cache
 USER $AUR_USER
+COPY --chown=$AUR_USER yaycache /var/ab/.cache/yay
+
+# INSTALL ROS2
 WORKDIR /ros2-pkg
 RUN git clone https://github.com/m2-farzan/ros2-galactic-PKGBUILD .
 

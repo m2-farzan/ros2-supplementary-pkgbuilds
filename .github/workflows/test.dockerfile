@@ -15,7 +15,7 @@ USER root
 RUN cat .SRCINFO | grep -oP "depends\ \=\ \K.+" | xargs sudo -u $AUR_USER yay -S --noconfirm --noprogressbar --needed
 
 COPY ros2-bin /ros2-bin
-RUN pacman -U $(find /ros2-bin -type f)
+RUN pacman -U $(find /ros2-bin -type f) --noconfirm --noprogressbar
 
 # INSTALL ROS2-COMMON
 USER $AUR_USER

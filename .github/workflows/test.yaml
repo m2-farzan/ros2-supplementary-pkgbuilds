@@ -75,7 +75,7 @@ jobs:
       - name: Chown yay cache in host
         run: |
           mkdir -p ./yaycache
-          sudo chown -R 1000:1000 ~/yaycache
+          sudo chown -R 1000:1000 ./yaycache
       - name: Build requirements
         uses: docker/build-push-action@v2
         with:

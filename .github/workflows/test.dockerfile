@@ -29,4 +29,4 @@ RUN mkdir src artifact
 USER root
 RUN cat .SRCINFO | grep -oP "depends\ \=\ \K.+" | xargs sudo -u $AUR_USER yay -S --noconfirm --noprogressbar --needed
 
-CMD [ "bash", "-c", "chown -R ab:ab /ros2-common-pkg && sudo -u ab bash -c 'source /opt/ros2/galactic/setup.bash && source /usr/share/gazebo-11/setup.bash && env PKGDEST=/ros2-common-pkg/artifact makepkg'" ]
+CMD [ "bash", "-c", "chown -R ab:ab /ros2-common-pkg && sudo -u ab bash -c 'source /opt/ros2/galactic/setup.bash && source /usr/share/gazebo/setup.bash && env PKGDEST=/ros2-common-pkg/artifact makepkg'" ]

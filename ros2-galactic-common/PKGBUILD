@@ -1,7 +1,7 @@
 # Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
 
 pkgname=ros2-galactic-common
-pkgver=2021_11_12_04_47
+pkgver=2021_11_12_12_45
 pkgrel=1
 pkgdesc="Common ROS 2 Packages (See upstream for the list)"
 url="https://github.com/m2-farzan/ros2-supplementary-pkgbuilds"
@@ -31,6 +31,7 @@ source=(
 
     "gazebo_ros_pkgs.repos::https://raw.githubusercontent.com/ros-simulation/gazebo_ros_pkgs/galactic/gazebo_ros_pkgs.repos"
     "gazebo_ros_pkgs.repos.patch::gazebo_ros_pkgs.repos.patch"
+    "turtlebot3.repos::https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/galactic-devel/turtlebot3.repos"
 )
 sha256sums=(
     'SKIP'
@@ -44,6 +45,7 @@ sha256sums=(
     'SKIP'
     'SKIP'
 
+    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -60,6 +62,10 @@ prepare() {
     patch -p0 --forward $(readlink -f $srcdir/gazebo_ros_pkgs.repos) $srcdir/gazebo_ros_pkgs.repos.patch || true
     mkdir -p $srcdir/gazebo_ros_pkgs
     vcs import $srcdir/gazebo_ros_pkgs < $srcdir/gazebo_ros_pkgs.repos
+
+    # turtlebot3
+    mkdir -p $srcdir/turtlebot3
+    vcs import $srcdir/turtlebot3 < $srcdir/turtlebot3.repos
 }
 
 build() {

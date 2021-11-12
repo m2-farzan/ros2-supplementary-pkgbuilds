@@ -19,7 +19,7 @@ RUN pacman -U $(find /ros2-bin -type f) --noconfirm --noprogressbar
 
 # INSTALL ROS2-COMMON
 USER $AUR_USER
-COPY --chown=$AUR_USER . /ros2-common-pkg
+COPY --chown=$AUR_USER ros2-galactic-common /ros2-common-pkg
 WORKDIR /ros2-common-pkg
 RUN mkdir src artifact
 

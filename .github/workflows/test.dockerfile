@@ -9,7 +9,6 @@ RUN sudo -u $AUR_USER git config --global user.email "test@example.com"
 # Share yay cache
 USER $AUR_USER
 COPY --chown=$AUR_USER yaycache /var/ab/.cache/yay
-RUN mv /var/ab/.cache/yay/yaycache/* /var/ab/.cache/yay/
 
 # INSTALL ROS2-COMMON
 USER $AUR_USER

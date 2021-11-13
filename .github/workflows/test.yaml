@@ -14,11 +14,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     timeout-minutes: 300
-    services:
-      registry:
-        image: registry:2
-        ports:
-          - 5000:5000
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -42,9 +37,7 @@ jobs:
           context: .
           file: .github/workflows/test.dockerfile
           push: true
-          tags: localhost:5000/ros2-galactic-common:ci
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          tags: ros2-galactic-common:ci
       - name: Update yay cache
         run: |
           id=$(docker create localhost:5000/ros2-galactic-common:ci)
@@ -64,8 +57,4 @@ jobs:
           docker run --rm -t \
             -v $HOME/build-cache/src:/ros2-common-pkg/src \
             -v $HOME/build-artifact:/ros2-common-pkg/artifact \
-            localhost:5000/ros2-galactic-common:ci
-      - uses: actions/upload-artifact@v2
-        with:
-          name: package
-          path: ~/build-artifact/*
+            ros2-galactic-common:ci

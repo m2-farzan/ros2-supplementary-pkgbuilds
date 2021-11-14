@@ -36,7 +36,7 @@ jobs:
         with:
           context: .
           file: .github/workflows/test.dockerfile
-          push: true
+          load: true
           tags: ros2-galactic-common:ci
       - name: Update yay cache
         run: |

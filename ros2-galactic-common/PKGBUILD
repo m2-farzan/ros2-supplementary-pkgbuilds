@@ -63,9 +63,6 @@ prepare() {
     mkdir -p $srcdir/gazebo_ros_pkgs
     vcs import $srcdir/gazebo_ros_pkgs < $srcdir/gazebo_ros_pkgs.repos
 
-    # navigation2 backport
-    git -C $srcdir/navigation2 cherry-pick b8d3611d52df78be4ddb099f62c93cc4392cbed4
-
     # turtlebot3
     mkdir -p $srcdir/turtlebot3
     vcs import $srcdir/turtlebot3 < $srcdir/turtlebot3.repos

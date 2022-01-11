@@ -12,6 +12,7 @@ pacman -S wget python-pip python-pyqt5 --noconfirm --noprogressbar
 pip3 install pyqt5==5.15.5
 
 # Temporary fix (waiting for https://github.com/acxz/pkgbuilds/issues/161)
+sudo -u ${AUR_USER} yay -S python-colcon-core --noconfirm --noprogressbar
 pip3 install colcon-core==0.7.0
 
 sudo -u ${AUR_USER} git config --global user.name "Test User"

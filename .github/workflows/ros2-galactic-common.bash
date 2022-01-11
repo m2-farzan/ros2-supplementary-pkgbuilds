@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-cd /ros2-galactic-common
+cd /ros2-supplementary-pkgbuilds/ros2-galactic-common
 AUR_USER=ab
 chown -R ${AUR_USER}:${AUR_USER} .
 

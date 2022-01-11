@@ -15,5 +15,5 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: ghcr.io/greyltc-org/archlinux-aur:yay
-          options: -v ${{ github.workspace }}/ros2-galactic-common:/ros2-galactic-common
-          run: bash /ros2-galactic-common/.github/workflows/ros2-galactic-common.bash
+          options: -v ${{ github.workspace }}:/ros2-supplementary-pkgbuilds
+          run: bash /ros2-supplementary-pkgbuilds/.github/workflows/ros2-galactic-common.bash

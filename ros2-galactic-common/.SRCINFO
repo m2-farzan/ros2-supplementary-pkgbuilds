@@ -5,8 +5,9 @@ pkgbase = ros2-galactic-common
 	url = https://github.com/m2-farzan/ros2-supplementary-pkgbuilds
 	arch = any
 	depends = ros2-galactic
-	depends = boost-libs
+	depends = boost
 	depends = ceres-solver
+	depends = graphicsmagick
 	depends = lcov
 	depends = opencv
 	depends = python-pyzmq
@@ -14,7 +15,7 @@ pkgbase = ros2-galactic-common
 	depends = python-yaml
 	depends = tbb
 	conflicts = ros2-galactic-xacro
-	source = fetch/angles::git+https://github.com/ros/angles#branch=ros2
+	source = fetch/angles::git+https://github.com/ros/angles#branch=galactic-devel
 	source = fetch/behaviortree_cpp_v3::git+https://github.com/BehaviorTree/BehaviorTree.CPP
 	source = fetch/bond_core::git+https://github.com/ros/bond_core#branch=ros2
 	source = fetch/diagnostics::git+https://github.com/ros/diagnostics#branch=galactic

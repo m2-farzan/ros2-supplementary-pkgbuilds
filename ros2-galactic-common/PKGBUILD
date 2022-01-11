@@ -9,8 +9,9 @@ arch=('any')
 conflicts=('ros2-galactic-xacro')
 depends=(
     'ros2-galactic'
-    'boost-libs'
+    'boost'
     'ceres-solver'
+    'graphicsmagick'
     'lcov'
     'opencv'
     'python-pyzmq'
@@ -19,7 +20,7 @@ depends=(
     'tbb'
 )
 source=(
-    "fetch/angles::git+https://github.com/ros/angles#branch=ros2"
+    "fetch/angles::git+https://github.com/ros/angles#branch=galactic-devel"
     "fetch/behaviortree_cpp_v3::git+https://github.com/BehaviorTree/BehaviorTree.CPP"
     "fetch/bond_core::git+https://github.com/ros/bond_core#branch=ros2"
     "fetch/diagnostics::git+https://github.com/ros/diagnostics#branch=galactic"
@@ -77,9 +78,12 @@ build() {
         printf "\nRAM is smaller than 32 GB. Parallel build will be disabled for stability.\n\n"
         export COLCON_EXTRA_ARGS="${COLCON_EXTRA_ARGS} --executor sequential"
     fi
+    
+    # Skip the packages that already exist
+    export EXISTING_PACKAGES="camera_calibration_parsers camera_info_manager image_common image_transport"
 
     # Build
-    colcon build --merge-install ${COLCON_EXTRA_ARGS}
+    colcon build --merge-install --packages-skip ${EXISTING_PACKAGES} ${COLCON_EXTRA_ARGS}
 }
 
 package() {

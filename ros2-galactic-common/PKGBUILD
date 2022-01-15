@@ -9,7 +9,7 @@ arch=('any')
 conflicts=('ros2-galactic-xacro')
 depends=(
     'ros2-galactic'
-    'boost-libs'
+    'boost'
     'ceres-solver'
     'lcov'
     'opencv'

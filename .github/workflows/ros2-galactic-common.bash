@@ -21,4 +21,4 @@ cat .SRCINFO | grep -oP "depends\ \=\ \K.+" | xargs sudo -u ${AUR_USER} yay -S -
 
 source /opt/ros2/galactic/setup.bash
 
-sudo -u ${AUR_USER} makepkg
+sudo --preserve-env -u ${AUR_USER} makepkg

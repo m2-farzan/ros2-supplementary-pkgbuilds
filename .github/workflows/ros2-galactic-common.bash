@@ -19,6 +19,4 @@ sudo -u ${AUR_USER} git config --global user.name "Test User"
 sudo -u ${AUR_USER} git config --global user.email "test@example.com"
 cat .SRCINFO | grep -oP "depends\ \=\ \K.+" | xargs sudo -u ${AUR_USER} yay -S --noconfirm --noprogressbar --needed
 
-source /opt/ros2/galactic/setup.bash
-
-sudo --preserve-env -u ${AUR_USER} makepkg
+sudo -u ${AUR_USER} bash -c "source /opt/ros2/galactic/setup.bash && makepkg"

@@ -11,6 +11,7 @@ depends=(
     'ros2-galactic'
     'boost'
     'ceres-solver'
+    'graphicsmagick'
     'lcov'
     'opencv'
     'python-pyzmq'

@@ -9,6 +9,7 @@ arch=('any')
 conflicts=('ros2-galactic-xacro')
 depends=(
     'ros2-galactic'
+    'gazebo'
     'boost'
     'ceres-solver'
     'graphicsmagick'

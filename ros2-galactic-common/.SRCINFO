@@ -5,6 +5,7 @@ pkgbase = ros2-galactic-common
 	url = https://github.com/m2-farzan/ros2-supplementary-pkgbuilds
 	arch = any
 	depends = ros2-galactic
+	depends = gazebo
 	depends = boost
 	depends = ceres-solver
 	depends = graphicsmagick

@@ -1,7 +1,7 @@
 # Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
 
 pkgname=ros2-galactic-common
-pkgver=2021_11_23_14_23
+pkgver=2022_02_05_18_23
 pkgrel=1
 pkgdesc="Common ROS 2 Packages (See upstream for the list)"
 url="https://github.com/m2-farzan/ros2-supplementary-pkgbuilds"
@@ -67,6 +67,10 @@ prepare() {
     mkdir -p $srcdir/gazebo_ros_pkgs
     vcs import $srcdir/gazebo_ros_pkgs < $srcdir/gazebo_ros_pkgs.repos
 
+    # slam_toolbox
+    git -C $srcdir/slam_toolbox checkout fab61e1225d6c1ee5d634a4851b0a387c11c2c39
+    git -C $srcdir/slam_toolbox apply $srcdir/slam_toolbox.patch
+
     # turtlebot3
     mkdir -p $srcdir/turtlebot3
     vcs import $srcdir/turtlebot3 < $srcdir/turtlebot3.repos
@@ -78,12 +82,9 @@ build() {
         printf "\nRAM is smaller than 32 GB. Parallel build will be disabled for stability.\n\n"
         export COLCON_EXTRA_ARGS="${COLCON_EXTRA_ARGS} --executor sequential"
     fi
-    
-    # Skip the packages that already exist
-    export EXISTING_PACKAGES="camera_calibration_parsers camera_info_manager image_common image_transport"
 
     # Build
-    colcon build --merge-install --packages-skip ${EXISTING_PACKAGES} ${COLCON_EXTRA_ARGS}
+    colcon build --merge-install --packages-skip ${COLCON_EXTRA_ARGS}
 }
 
 package() {

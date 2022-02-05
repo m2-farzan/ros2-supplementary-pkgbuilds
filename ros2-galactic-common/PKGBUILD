@@ -1,7 +1,7 @@
 # Maintainer: Mohammad Mostafa Farzan <m2_farzan@yahoo.com>
 
 pkgname=ros2-galactic-common
-pkgver=2021_11_12_12_45
+pkgver=2021_11_23_14_23
 pkgrel=1
 pkgdesc="Common ROS 2 Packages (See upstream for the list)"
 url="https://github.com/m2-farzan/ros2-supplementary-pkgbuilds"

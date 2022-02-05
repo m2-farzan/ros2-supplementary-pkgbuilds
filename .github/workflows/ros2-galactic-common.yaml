@@ -1,8 +1,6 @@
 name: ros2-galactic-common_test
 
-on:
-  push:
-  pull_request:
+on: workflow_dispatch
 
 jobs:
   docker:

@@ -2,7 +2,7 @@ diff --git a/gazebo_ros_pkgs.repos b/gazebo_ros_pkgs.repos
 index 2657f93..20c8872 100644
 --- a/gazebo_ros_pkgs.repos
 +++ b/gazebo_ros_pkgs.repos
-@@ -2,11 +2,11 @@ repositories:
+@@ -2,12 +2,12 @@ repositories:
    gazebo_ros_pkgs:
      type: git
      url: https://github.com/ros-simulation/gazebo_ros_pkgs.git
@@ -16,3 +16,5 @@ index 2657f93..20c8872 100644
    vision_opencv:
      type: git
      url: https://github.com/ros-perception/vision_opencv.git
+-    version: ros2
++    version: 3.0.1
